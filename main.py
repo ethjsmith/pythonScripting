@@ -94,9 +94,15 @@ def q28(q):#first
             ans.append(x)
     return ans
 
-def current(q):
+def q29(q):
     data = q.data(29)
-
+    s = ""
+    for x in data:
+        b = bytes.fromhex(x)
+        aqs = b.decode()
+        s += aqs
+    print(s)
+    return s
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
