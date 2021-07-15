@@ -103,6 +103,100 @@ def q29(q):
         s += aqs
     print(s)
     return s
+def q31(q):
+    data = q.data(30)
+    d = set()
+    for x in data:
+        for y in x:
+            d.add(y)
+    print(d)
+    return sorted(d)
+
+def q31(q):
+    data = q.data(31)
+    return sorted(data)
+
+def q32(q):
+    data = q.data(32)
+    lst = []
+    for x in data:
+        lst.append(data[x])
+    return sorted(lst)
+
+def q33(q):
+    data = q.data(33)
+    lst = []
+    for x in data:
+        lst.append((x,data[x]))
+    return sorted(lst)
+
+def q34(q):
+    data = q.data(34)
+    return data["python"] + data["rocks"]
+
+def q35(q):
+    data = q.data(35)
+    #count = 0
+    #totalV = 0
+    #for date in data:
+    #    count += 1
+        #print(data[date]["Vista"])
+    #    totalV += float(data[date]["Vista"])
+    #print(f"{totalV}/{count} = {totalV/count}")
+    #return totalV/count\
+    # I can't read lol
+    return data["6-2017"]["Vista"]
+
+def q36(q):# yeah
+    data = q.data(36)
+    btotal = 0
+    best = ""
+    for x in data:
+        total =float(data[x]["WinXP"]) + float(data[x]["Vista"]) + float(data[x]["NT*"])
+        if total > btotal:
+            best = x
+            btotal = total
+    return best[0]
+
+def q37(q):
+    data = q.data(37)
+    return sorted(data)
+
+def q38(q):
+    data = q.data(38)
+    ans = []
+    for x in data:
+        z = x.split(",")
+        if int(z[1]) % int(z[0]) == 0:
+            ans.append("True")
+        else:
+            ans.append("False")
+    return ans
+def q39(q):
+    data = q.data(39)
+    ans = []
+    for x in data:
+        ans.append(type(x))
+    return ans
+
+def q40(q): # what ??
+    data = q.data(40)
+    data = data.split(",")
+    d2 = []
+    for x in data:
+        y = x.split(":")
+        d2.append(y[1])
+    for x in d2[::-1]:
+        print(f"trying {x}, {q.answer(x)}")
+def q41(q): # FINISH THIS ONE
+    data = q.data(41)
+    decry = ""
+    for char in data:
+        decry += char.encode() ^ "0x61".encode()
+    print(decry)
+    return decry
+
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
