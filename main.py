@@ -1,6 +1,6 @@
 #TODO 10, 11, after 17
 
-import pyWars,sys, secret
+import pyWars,sys, secret, codecs, base64
 def login ():
     q = pyWars.exercise("https://od.sec573.com:10000")
     q.login(secret.user(),secret.passw())
@@ -19,6 +19,48 @@ def ok (q,num): # write challenges here idk lol
     z = q.data(num)
     z = z + z[::-1] + z
     print(q.answer(z))
+def q1(q):
+    data = q.data(1)
+    return data + 5
+def q2(q):
+    data = q.data(2)
+    return 16 ** data
+def q3(q):
+    data = q.data(3)
+    return float(data)
+def q4(q):
+    data = q.data(4)
+    return data >> 4
+def q5(q):
+    data = q.data(5)
+    return data.decode()
+def q6(q):
+    data = q.data(6)
+    return data.encode()
+def q7(q):
+    data = q.data(7)
+    return ord(data[4])
+def q8(q):
+    data = q.data(8)
+    return len(data.encode())
+def q9(q):
+    data = q.data(9)
+    return codecs.encode(data,"rot_13")
+def q10(q):
+    data = q.data(10)
+    return base64.b64decode(data)
+def q11(q):
+    data = q.data(11)
+    return data.upper()
+def q12(q):
+    data = q.data(12)
+    return data.find("SANS")
+def q13(q):
+    data = q.data(13)
+    return data[::-1]
+def q14(q):
+    data = q.data(14)
+    return data + data[::-1] + data
 def q15(q,num):
     data = q.data(15)
     ans = data[1] + data[4] + data[8]
@@ -136,14 +178,6 @@ def q34(q):
 
 def q35(q):
     data = q.data(35)
-    #count = 0
-    #totalV = 0
-    #for date in data:
-    #    count += 1
-        #print(data[date]["Vista"])
-    #    totalV += float(data[date]["Vista"])
-    #print(f"{totalV}/{count} = {totalV/count}")
-    #return totalV/count\
     # I can't read lol
     return data["6-2017"]["Vista"]
 
@@ -179,7 +213,7 @@ def q39(q):
         ans.append(type(x))
     return ans
 
-def q40(q): # what ??
+def q40(q): # what ?? brute force, try different things each time or this wont work, answer is "turtle"
     data = q.data(40)
     data = data.split(",")
     d2 = []
