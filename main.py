@@ -1,6 +1,6 @@
 #TODO 10, 11, after 17
 
-import pyWars,sys, secret, codecs, base64
+import pyWars,sys, secret, codecs, base64, operator
 def login ():
     q = pyWars.exercise("https://od.sec573.com:10000")
     q.login(secret.user(),secret.passw())
@@ -222,13 +222,17 @@ def q40(q): # what ?? brute force, try different things each time or this wont w
         d2.append(y[1])
     for x in d2[::-1]:
         print(f"trying {x}, {q.answer(x)}")
-def q41(q): # FINISH THIS ONE
+def current(q): # FINISH THIS ONE
     data = q.data(41)
-    decry = ""
-    for char in data:
-        decry += char.encode() ^ "0x61".encode()
-    print(decry)
-    return decry
+    decry = b""
+    a_list = [chr(ord(a) ^ ord(b)) for a,b in zip(data, "0x61")]
+    # for char in data:
+    #     #z = char.encode() ^ "0x61".encode()
+    #     decry += operator.xor(ord(char),ord("0x61"))
+    #     #a_list = [chr(ord(a) ^ ord(b)) for a,b in zip(s1, s2)]
+    # print(decry)
+    print(a_list)
+    return a_list
 
 
 
