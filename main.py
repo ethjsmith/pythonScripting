@@ -222,18 +222,23 @@ def q40(q): # what ?? brute force, try different things each time or this wont w
         d2.append(y[1])
     for x in d2[::-1]:
         print(f"trying {x}, {q.answer(x)}")
-def current(q): # FINISH THIS ONE
+def q41(q):
     data = q.data(41)
-    decry = b""
-    a_list = [chr(ord(a) ^ ord(b)) for a,b in zip(data, "0x61")]
-    # for char in data:
-    #     #z = char.encode() ^ "0x61".encode()
-    #     decry += operator.xor(ord(char),ord("0x61"))
-    #     #a_list = [chr(ord(a) ^ ord(b)) for a,b in zip(s1, s2)]
-    # print(decry)
-    print(a_list)
-    return a_list
-
+    decoded = ""
+    for char in data:
+        ordc = ord(char) ^ 0x61 # was interpreting this as a string was the problem
+        ordc = chr(ordc)
+        decoded += ordc
+    print(decoded)
+    return decoded
+def q42(q): # this one has too much description text for what it really wants ... 
+    data = q.data(42)
+    new = ""
+    for x in range(len(data[0])):
+        clear = chr(ord(data[0][x]) ^  ord(data[1][x]))
+        new += clear
+    print(new)
+    return(new)
 
 
 if __name__ == "__main__":
