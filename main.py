@@ -1,13 +1,13 @@
 #TODO 10, 11, after 17
 
-import pyWars,sys, secret, codecs, base64, operator
+import pyWars,sys, secret, codecs, base64, operator, os
 def login ():
     q = pyWars.exercise("https://od.sec573.com:10000")
     q.login(secret.user(),secret.passw())
     return q
 
 def q(q,num):
-    print(f"Question {num}: ")
+    print(f"Question {num}({q.num2name(num)}):")
     q.question(num)
     print( "DATA:  ")
     print(q.data(num))
@@ -231,7 +231,7 @@ def q41(q):
         decoded += ordc
     print(decoded)
     return decoded
-def q42(q): # this one has too much description text for what it really wants ... 
+def q42(q): # this one has too much description text for what it really wants ...
     data = q.data(42)
     new = ""
     for x in range(len(data[0])):
@@ -239,6 +239,25 @@ def q42(q): # this one has too much description text for what it really wants ..
         new += clear
     print(new)
     return(new)
+def q43(q):
+    data = q.data(43)
+    a = open(data)
+    return len(a.read())
+def current(q): #TODO fix / learn ?
+    data = q.data(44)
+    print(data)
+    a = os.listdir(data)
+    #return
+    _, _, filenames = next(os.walk(data), (None, None, []))
+    return filenames.sort()
+    # a.sort()
+    # print(a)
+    # return a.sort()
+def q45 (q):
+    data = q.data(45)
+    a = open(data[0])
+    return a.readlines(data[1])
+
 
 
 if __name__ == "__main__":
