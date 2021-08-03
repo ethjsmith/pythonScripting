@@ -1,6 +1,6 @@
 #TODO 10, 11, after 17
 
-import pyWars,sys, secret, codecs, base64, operator, os
+import pyWars,sys, secret, codecs, base64, operator, os, pathlib, gzip
 def login ():
     q = pyWars.exercise("https://od.sec573.com:10000")
     q.login(secret.user(),secret.passw())
@@ -243,22 +243,41 @@ def q43(q):
     data = q.data(43)
     a = open(data)
     return len(a.read())
-def current(q): #TODO fix / learn ?
+def q44(q): #TODO fix / learn ?
     data = q.data(44)
     print(data)
-    a = os.listdir(data)
-    #return
-    _, _, filenames = next(os.walk(data), (None, None, []))
-    return filenames.sort()
-    # a.sort()
-    # print(a)
-    # return a.sort()
+    dd = []
+    d = pathlib.Path(data)
+    l = d.glob("*")
+    #print(l)
+    for f in l:
+        print(f)
+        if f.is_file():
+            dd.append(f.parts[-1])
+    #print(dd)
+    #print(dd)
+    dd.sort()
+    #print(dd)
+    return dd
 def q45 (q):
     data = q.data(45)
-    a = open(data[0])
-    return a.readlines(data[1])
-
-
+    zi = gzip.open(data[0],"rt")
+    lines = zi.readlines()
+    return lines[data[1]-1]
+def q46(q):
+    data = q.data(46)
+    pat = pathlib.Path("/home/student/Public/log/")
+    ret = []
+    for files in pat.rglob("*"):
+        if files.is_file():
+            fi = open(files,encoding="latin-1").read()
+            if data in fi:
+                ret.append(str(files))
+    ret.sort()
+    print(ret)
+    return ret
+def q47(q):
+    data = q.data(47)
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
