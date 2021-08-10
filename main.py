@@ -1,6 +1,7 @@
 #TODO 10, 11, after 17
 
-import pyWars,sys, secret, codecs, base64, operator, os, pathlib, gzip
+import pyWars,sys, secret, codecs, base64, operator, os, pathlib, gzip, re
+from freq import *
 def login ():
     q = pyWars.exercise("https://od.sec573.com:10000")
     q.login(secret.user(),secret.passw())
@@ -278,6 +279,90 @@ def q46(q):
     return ret
 def q47(q):
     data = q.data(47)
+    inst = re.findall(".ython",data)
+    return len(inst)
+def q48(q):
+    data = q.data(48)
+    x = re.findall(r"[\d.]+?(?=#)",data)
+    print(x)
+    return x
+def q49(q):
+    data = q.data(49)
+    x = re.findall(r"(?<=query: ).+?(?= IN)|[\d.]+?(?=#)",data)
+    answers = []
+    for q in range(0,len(x),2):
+        answers.append((x[q],x[q+1]))
+    print(answers)
+    return answers
+def q50(q):
+    data = q.data(50)
+    #print(data)
+    x = re.findall("(?<=\W)\d{3}(?=\W|$)|^\d{3}",data)
+    #print(x)
+    return x
+def q51(q):
+    data = q.data(51)
+    x = re.findall(".+?[.?!]  ",data)
+    print(x)
+    return x
+def q52(q):
+    data = q.data(52)
+    x = re.findall("",data)
+    ans = []
+    for ssn in x:
+        if len(ssn) == 9:
+            ans.append()
+        else:
+            ans.append(ssn)
+def q56(q):
+    data = q.data(56)
+    print(data)
+    a = open("/home/student/Public/log/dnslogs/" + data[0])
+    res = []
+    for line in a:
+        print(line)
+        r = re.findall("(?<=query: )" + data[1],line)
+        if r:
+            print("matched")
+            res.append(line)
+    print(res)
+    results = set()
+    for x in res:
+        qq = re.findall("(?<=client )\d+.\d+.\d+.\d+",x)
+        for z in qq:
+            results.add(z)
+    yoo = sorted(results)
+    print(yoo)
+    # file = a.readlines()
+    # print(file)
+    # x = re.findall(data[1],file)
+    # print(x)
+def q57(q):
+    data = q.data(57)
+    counter = 0
+    a = open("/home/student/Public/log/dnslogs/" + data[0])
+    for line in a:
+        r = re.findall("(?<=query: ).+?(?= IN)",line)
+        #print(r)
+        if len(r[0]) > data[1]:
+            counter += 1
+    #print(counter)
+    return counter
+def q58(q):
+    data = q.data(58)
+    res = []
+    fc = FreqCounter()
+    fc.load("/home/student/Public/Modules/freq/freqtable2018.freq")
+    for x in data:
+        if fc.probability(x)[1] < 1.0:
+            res.append(x)
+    return res
+def current(q):
+    data = q.data(59)
+    for filename in glob.glob(os.path.join('/home/student/Public/log/dnslogs/*.log')):
+        with open(os.path.join(os.getcwd(), filename), 'r') as f:
+            
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
