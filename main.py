@@ -1,6 +1,7 @@
 #TODO 10, 11, after 17
 
-import pyWars,sys, secret, codecs, base64, operator, os, pathlib, gzip, re
+import pyWars,sys, secret, codecs, base64, operator, os, pathlib, gzip, re, glob
+from collections import Counter
 from freq import *
 def login ():
     q = pyWars.exercise("https://od.sec573.com:10000")
@@ -357,12 +358,28 @@ def q58(q):
         if fc.probability(x)[1] < 1.0:
             res.append(x)
     return res
-def current(q):
+def q59(q):
     data = q.data(59)
+    names = []
     for filename in glob.glob(os.path.join('/home/student/Public/log/dnslogs/*.log')):
         with open(os.path.join(os.getcwd(), filename), 'r') as f:
-            
-
+            for line in f.readlines():
+                revised = re.findall(data,line)
+                if revised:
+                    res = re.findall("(?<=query: ).+?(?= IN)",line)
+                    for ans in res:
+                        names.append(ans)
+    return sorted(names)
+def current(q):
+    data = q.data(60)
+    a = open("/home/student/Public/log/apache2/access.log")
+    c = Counter()
+    for line in a:
+        q = re.findall("(?<= \")[^\"]+?(?=\"\n)",line)
+        if q:
+            c.update(q)
+    print(c)
+    return c.most_common(data)
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
