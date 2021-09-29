@@ -3,6 +3,7 @@
 import pyWars,sys, secret, codecs, base64, operator, os, pathlib, gzip, re, glob
 from collections import Counter
 from freq import *
+from scapy.all import *
 def login ():
     q = pyWars.exercise("https://od.sec573.com:10000")
     q.login(secret.user(),secret.passw())
@@ -370,7 +371,7 @@ def q59(q):
                     for ans in res:
                         names.append(ans)
     return sorted(names)
-def current(q):
+def q60(q):
     data = q.data(60)
     a = open("/home/student/Public/log/apache2/access.log")
     c = Counter()
@@ -380,6 +381,40 @@ def current(q):
             c.update(q)
     print(c)
     return c.most_common(data)
+def q62(q):
+    data = q.data(62)
+    s = Ether(data)
+    #print(dir(s))
+    return s["TCP"].seq
+
+def q63(q):
+    data = q.data(63)
+    s = Ether(data)
+    return s["TCP"].payload
+def q64(q):
+    data = q.data(64)
+    s = scapy.plist.PacketList([Ether(x) for x in data])
+    payload=""
+    for z in s.sessions().values():
+        payload = b"".join(x[Raw].load for x in z).decode()
+        #print(payload)
+    return(payload)
+def current(q):
+    data = q.data(65)
+    pa = rdpcap("/home/student/Public/packets/web.pcap")
+    l = b"".join(x[Raw].load for x in pa if x.haslayer(Raw))
+    #print(l)
+    r = re.findall(b"<command>.+</command>",l)
+    #print(r)
+    ans = str(r[data-1])
+    #print(ans)
+    #qq = ans.replace("%20"," ")
+    print(ans)
+    print(ans[11:-11])
+    return ans[11:-11]#str(r[data][9:-10])
+
+    return -1
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
